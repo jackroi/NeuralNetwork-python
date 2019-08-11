@@ -1,4 +1,4 @@
-import random
+import random, json
 
 class Matrix(object):
   def __init__(self, rows, cols):
@@ -49,19 +49,65 @@ class Matrix(object):
 
     return self
 
+  def add_matrix(self, m, in_place=True):
+    a = self, b = m
+    if a.rows != b.rows or a.cols != b.cols:
+      raise ValueError("Matrixes not compatible")
 
-  # TODO in place param
-  def add_matrix(self, a, b, in_place=True): pass
-  def add_scalar(self, a, n, in_place=True): pass
-  def sub_matrix(self, a, b, in_place=True): pass
-  def sub_scalar(self, a, n, in_place=True): pass
-  def mul_matrix(self, a, b, in_place=True): pass
-  def mul_scalar(self, a, n, in_place=True): pass
-  def div_matrix(self, a, b, in_place=True): pass
-  def div_scalar(self, a, n, in_place=True): pass
-  def dot_product(self, a, b, in_place=True): pass
+    return a.mapi(lambda el, r, c: el + b[r][c], in_place)
 
+  def add_scalar(self, n, in_place=True):
+    return self.map(lambda el: el + n, in_place)
 
+  def sub_matrix(self, m, in_place=True):
+    a = self, b = m
+    if a.rows != b.rows or a.cols != b.cols:
+      raise ValueError("Matrixes not compatible")
+
+    return a.mapi(lambda el, r, c: el - b[r][c], in_place)
+
+  def sub_scalar(self, n, in_place=True):
+    return self.map(lambda el: el - n, in_place)
+
+  def mul_matrix(self, m, in_place=True):
+    a = self, b = m
+    if a.rows != b.rows or a.cols != b.cols:
+      raise ValueError("Matrixes not compatible")
+
+    return a.mapi(lambda el, r, c: el * b[r][c], in_place)
+
+  def mul_scalar(self, n, in_place=True):
+    return self.map(lambda el: el * n, in_place)
+
+  def div_matrix(self, m, in_place=True):
+    a = self, b = m
+    if a.rows != b.rows or a.cols != b.cols:
+      raise ValueError("Matrixes not compatible")
+
+    return a.mapi(lambda el, r, c: el / b[r][c], in_place)
+
+  def div_scalar(self, n, in_place=True):
+    return self.map(lambda el: el / n, in_place)
+
+  @staticmethod
+  def dot_product(a, b):
+    if a.cols != b.rows:
+      raise ValueError("Matrixes not compatible")
+
+    new_data = []
+    for i in range(a.rows):
+      new_row = []
+      for j in range(b.cols):
+        _sum = 0
+        for k in range(a.cols):
+          _sum += a.data[i][k] * b.data[k][j]
+        new_row.append(_sum)
+      new_data.append(new_row)
+
+    m = Matrix(a.rows, b.cols)
+    m.data = new_data
+
+    return m
 
   @staticmethod
   def transpose(m):     # TODO maybe also in_place
@@ -102,7 +148,8 @@ class Matrix(object):
     return self
 
   def serialize(self):
-    pass
+    json.dumps(self.__dict__)
 
-  def deserialize(self):
-    pass
+  @staticmethod
+  def deserialize(data):
+    json.loads(data)
