@@ -8,6 +8,7 @@ Matrix library
 
 import random, json
 
+
 class Matrix(object):
   def __init__(self, rows, cols):
     """
@@ -25,6 +26,7 @@ class Matrix(object):
     self.cols = cols
     self.data = [[0 for _ in range(cols)] for _ in range(rows)]
 
+
   def copy(self):
     """
     Builds a copy of the matrix.
@@ -40,6 +42,7 @@ class Matrix(object):
         m.data[i][j] = self.data[i][j]
 
     return m
+
 
   @staticmethod
   def from_2d_list(rows, cols, l):
@@ -59,6 +62,7 @@ class Matrix(object):
     m.data = l
 
     return m
+
 
   @staticmethod
   def from_flat_list(rows, cols, l):
@@ -86,6 +90,7 @@ class Matrix(object):
 
     return m
 
+
   @staticmethod
   def from_list(l):
     """
@@ -102,6 +107,7 @@ class Matrix(object):
 
     return Matrix.from_flat_list(len(l), 1, l)
 
+
   def to_list(self):
     """
     Builds a new list of numbers by flattening the matrix.
@@ -112,23 +118,14 @@ class Matrix(object):
 
     return [self.data[i / self.cols][i % self.cols] for i in range(self.rows * self.cols)]
 
-  def randomize(self):
-    """
-    Randomizes the values contained in the matrix, giving a random value between -1 and 1.
 
-    Returns:
-      Returns the modified matrix.
-    """
-
-    return self.randomize_range(-1.0, 1.0)
-
-  def randomize_range(self, _min, _max):
+  def randomize(self, _min=-1.0, _max=1.0):
     """
     Randomizes the values contained in the matrix, giving a random value between min and max.
 
     Args:
-      _min: The minimum possible number.
-      _max: The maximum possible number.
+      _min: The minimum possible number (default -1.0).
+      _max: The maximum possible number (default 1.0).
 
     Returns:
       Returns the modified matrix.
@@ -139,6 +136,7 @@ class Matrix(object):
         self.data[r][c] = random.uniform(_min, _max)
 
     return self
+
 
   def add_matrix(self, m, in_place=True):
     """
@@ -163,6 +161,7 @@ class Matrix(object):
 
     return a.mapi(lambda el, r, c: el + b[r][c], in_place)
 
+
   def add_scalar(self, n, in_place=True):
     """
     Sums a scalar to this matrix.
@@ -178,6 +177,7 @@ class Matrix(object):
     """
 
     return self.map(lambda el: el + n, in_place)
+
 
   def sub_matrix(self, m, in_place=True):
     """
@@ -202,6 +202,7 @@ class Matrix(object):
 
     return a.mapi(lambda el, r, c: el - b[r][c], in_place)
 
+
   def sub_scalar(self, n, in_place=True):
     """
     Subtracts a scalar to this matrix.
@@ -217,6 +218,7 @@ class Matrix(object):
     """
 
     return self.map(lambda el: el - n, in_place)
+
 
   def mul_matrix(self, m, in_place=True):
     """
@@ -241,6 +243,7 @@ class Matrix(object):
 
     return a.mapi(lambda el, r, c: el * b[r][c], in_place)
 
+
   def mul_scalar(self, n, in_place=True):
     """
     Multiplies this matrix with a scalar.
@@ -256,6 +259,7 @@ class Matrix(object):
     """
 
     return self.map(lambda el: el * n, in_place)
+
 
   def div_matrix(self, m, in_place=True):
     """
@@ -280,6 +284,7 @@ class Matrix(object):
 
     return a.mapi(lambda el, r, c: el / b[r][c], in_place)
 
+
   def div_scalar(self, n, in_place=True):
     """
     Divides this matrix with a scalar.
@@ -295,6 +300,7 @@ class Matrix(object):
     """
 
     return self.map(lambda el: el / n, in_place)
+
 
   @staticmethod
   def dot_product(a, b):
@@ -330,6 +336,7 @@ class Matrix(object):
 
     return m
 
+
   @staticmethod
   def transpose(m):     # TODO maybe also in_place
     """
@@ -346,6 +353,7 @@ class Matrix(object):
     """
 
     return Matrix(m.cols, m.cols).mapi(lambda _, r, c: m.data[c][r])
+
 
   def map(self, fn, in_place=True):
     """
@@ -374,6 +382,7 @@ class Matrix(object):
       self.data = new_data
       return self
 
+
   def mapi(self, fn, in_place=True):
     """
     Applies the given function to all the elements of the matrix (with row and column index).
@@ -401,6 +410,7 @@ class Matrix(object):
       self.data = new_data
       return self
 
+
   def print(self):
     """
     Prints the matrix.
@@ -414,16 +424,17 @@ class Matrix(object):
 
     return self
 
+
   def serialize(self):
     """
     Serializes the matrix.
 
     Returns:
-      Returns the input matrix.
+      Returns the serialized matrix.
     """
 
-    json.dumps(self.__dict__)
-    return self
+    return json.dumps(self.__dict__)
+
 
   @staticmethod
   def deserialize(data):
