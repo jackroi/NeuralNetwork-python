@@ -7,7 +7,7 @@ Simple NeuralNetwork library
 """
 
 import math, json, random
-from matrix import Matrix
+from src.matrix import Matrix
 
 # TODO error checking
 

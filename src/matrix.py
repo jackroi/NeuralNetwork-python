@@ -116,7 +116,7 @@ class Matrix(object):
       Returns a list of numbers.
     """
 
-    return [self.data[i / self.cols][i % self.cols] for i in range(self.rows * self.cols)]
+    return [self.data[i // self.cols][i % self.cols] for i in range(self.rows * self.cols)]
 
 
   def randomize(self, _min=-1.0, _max=1.0):
@@ -155,11 +155,12 @@ class Matrix(object):
       ValueError: if a.rows != b.rows or a.cols != b.cols
     """
 
-    a = self, b = m
+    a = self
+    b = m
     if a.rows != b.rows or a.cols != b.cols:
       raise ValueError("Matrixes not compatible")
 
-    return a.mapi(lambda el, r, c: el + b[r][c], in_place)
+    return a.mapi(lambda el, r, c: el + b.data[r][c], in_place)
 
 
   def add_scalar(self, n, in_place=True):
@@ -196,11 +197,12 @@ class Matrix(object):
       ValueError: if a.rows != b.rows or a.cols != b.cols
     """
 
-    a = self, b = m
+    a = self
+    b = m
     if a.rows != b.rows or a.cols != b.cols:
       raise ValueError("Matrixes not compatible")
 
-    return a.mapi(lambda el, r, c: el - b[r][c], in_place)
+    return a.mapi(lambda el, r, c: el - b.data[r][c], in_place)
 
 
   def sub_scalar(self, n, in_place=True):
@@ -237,11 +239,12 @@ class Matrix(object):
       ValueError: if a.rows != b.rows or a.cols != b.cols
     """
 
-    a = self, b = m
+    a = self
+    b = m
     if a.rows != b.rows or a.cols != b.cols:
       raise ValueError("Matrixes not compatible")
 
-    return a.mapi(lambda el, r, c: el * b[r][c], in_place)
+    return a.mapi(lambda el, r, c: el * b.data[r][c], in_place)
 
 
   def mul_scalar(self, n, in_place=True):
@@ -278,11 +281,12 @@ class Matrix(object):
       ValueError: if a.rows != b.rows or a.cols != b.cols
     """
 
-    a = self, b = m
+    a = self
+    b = m
     if a.rows != b.rows or a.cols != b.cols:
       raise ValueError("Matrixes not compatible")
 
-    return a.mapi(lambda el, r, c: el / b[r][c], in_place)
+    return a.mapi(lambda el, r, c: el / b.data[r][c], in_place)
 
 
   def div_scalar(self, n, in_place=True):
@@ -352,7 +356,7 @@ class Matrix(object):
       ValueError: if a.cols != b.rows
     """
 
-    return Matrix(m.cols, m.cols).mapi(lambda _, r, c: m.data[c][r])
+    return Matrix(m.cols, m.rows).mapi(lambda _, r, c: m.data[c][r])
 
 
   def map(self, fn, in_place=True):
