@@ -49,7 +49,7 @@ The usage of the library is simple, all the code is well documented and there is
 <!-- TODO example link --->
 
 ## ⛏️ Built Using <a name="built_using"></a>
-- [Python#](https://www.python.org/) - Functional programming language
+- [Python](https://www.python.org/) - Programming language
 
 
 ## ✍️ Authors <a name="authors"></a>
@@ -62,4 +62,5 @@ See also the list of [contributors](https://github.com/jackroi/NeuralNetwork-pyt
 - [@shiffman](https://github.com/shiffman) Javascript implementation (see [here](https://github.com/CodingTrain/Toy-Neural-Network-JS))
 
 
-<!-- TODO add section pointing out the fsharp implementation (# See Also) --->
+## See Also
+- [F# version](https://github.com/jackroi/NeuralNetwork-fsharp) built using functional programming paradigm.
